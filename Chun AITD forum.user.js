@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Chun, AITD forum
 // @namespace    http://your.homepage/
-// @version      0.00001AlphaOmegaDeltaTetaZetaMeta
+// @version      0.00002AlphaOmegaDeltaTetaZetaMeta
 // @description  Such a useful description aiiight mah nigga
 // @author       Infection
-// @include      http://mush.vg/g/chun-alone-in-the-dark/forum/*
+// @include      http://mush.vg/*
 // @grant        XMlHttpRequest
 // @include		 http://chun-alone-in-the-dark.xooit.org/*
 // @require http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js
@@ -28,7 +28,7 @@ function createIframe(){
 
 
 
-if (window.top === window.self) {
+if ((window.top === window.self) && (window.location.href.indexOf("118711") > -1)) {
 	// Check for browser support of event handling capability
     
 	if (window.addEventListener)
