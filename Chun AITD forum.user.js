@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Chun, AITD forum
 // @namespace    http://your.homepage/
-// @version      0.00002AlphaOmegaDeltaTetaZetaMeta
+// @version      0.00003
 // @description  Such a useful description aiiight mah nigga
 // @author       Infection
 // @include      http://mush.vg/*
@@ -17,15 +17,13 @@ function createIframe(){
   i.scrolling = "auto";
   i.id = "chunXooit"
   i.width = "100%";
-  i.style.minHeight = "900px";
+  i.style.minHeight = "1350px";
   i.style.display = "none";
   var a = document.createAttribute("frameborder");
   a.value = "0";
   i.setAttributeNode(a);
   document.getElementById("mush_content").appendChild(i);
 };
-	
-
 
 
 if ((window.top === window.self) && (window.location.href.indexOf("118711") > -1)) {
@@ -50,8 +48,22 @@ if ((window.top === window.self) && (window.location.href.indexOf("118711") > -1
 	});
 }
 else {
-    //iframe...
+    //iframe...	
+    if (window.location.href.indexOf("xooit") > -1){
+    if (window.addEventListener)
+        window.addEventListener("load", hideUselessStuff, false);
+	else if (window.attachEvent)
+        window.attachEvent("onload", hideUselessStuff);
+    else window.onload = hideUselessStuff;
+    }
 
+}
+
+function hideUselessStuff(){
+    $(".bodyline").find("table").first().css("display","none");
+    $("body").attr("bgcolor","");
+    $("body").attr("style","background: none ; background-color: transparent");
+    $("body").find("table").first().attr("width","100%");
 }
 
 
