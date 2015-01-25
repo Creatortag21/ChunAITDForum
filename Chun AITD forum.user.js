@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Chun, AITD forum
 // @namespace    http://your.homepage/
-// @version      0.00003
+// @version      0.00004
 // @description  Such a useful description aiiight mah nigga
 // @author       Infection
 // @include      http://mush.vg/*
@@ -49,7 +49,7 @@ if ((window.top === window.self) && (window.location.href.indexOf("118711") > -1
 }
 else {
     //iframe...	
-    if (window.location.href.indexOf("xooit") > -1){
+    if ((window.location.href.indexOf("xooit") > -1) && !(window.top === window.self)){
     if (window.addEventListener)
         window.addEventListener("load", hideUselessStuff, false);
 	else if (window.attachEvent)
@@ -64,6 +64,8 @@ function hideUselessStuff(){
     $("body").attr("bgcolor","");
     $("body").attr("style","background: none ; background-color: transparent");
     $("body").find("table").first().attr("width","100%");
+    $("td.gensmall").append('<br /><a href="http://chun-alone-in-the-dark.xooit.org/privmsg.php?folder=inbox" \
+							class="gensmall">Boite de réception</a>');
 }
 
 
