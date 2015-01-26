@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Chun, AITD forum
 // @namespace    http://your.homepage/
-// @version      0.00004
+// @version      0.00005
 // @description  Such a useful description aiiight mah nigga
 // @author       Infection
 // @include      http://mush.vg/*
@@ -66,6 +66,7 @@ function hideUselessStuff(){
     $("body").find("table").first().attr("width","100%");
     $("td.gensmall").append('<br /><a href="http://chun-alone-in-the-dark.xooit.org/privmsg.php?folder=inbox" \
 							class="gensmall">Boite de réception</a>');
+    $("body#check").css("color","#EBEBEC");
 }
 
 
