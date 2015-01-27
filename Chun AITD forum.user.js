@@ -1,11 +1,7 @@
 // ==UserScript==
 // @name         Chun, AITD forum
 // @namespace    http://your.homepage/
-<<<<<<< HEAD
 // @version      0.00006
-=======
-// @version      0.00005
->>>>>>> origin/master
 // @description  Such a useful description aiiight mah nigga
 // @author       Infection
 // @include      http://mush.vg/*
