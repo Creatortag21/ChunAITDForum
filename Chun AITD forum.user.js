@@ -2,6 +2,7 @@
 // @name         Chun, AITD forum
 // @namespace    http://your.homepage/
 // @version      0.00006
+>>>>>>> origin/master
 // @description  Such a useful description aiiight mah nigga
 // @author       Infection
 // @include      http://mush.vg/*
