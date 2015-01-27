@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Chun, AITD forum
 // @namespace    http://your.homepage/
-// @version      0.00007
+// @version      0.00008
 // @description  Such a useful description aiiight mah nigga
 // @author       Infection
 // @include      http://mush.vg/*
@@ -13,7 +13,6 @@
 var notifXooit = [];
 
 function makeIco(){
-    $("#notifXooit").remove();
     $("#maincontainer").append('<div id="notifXooit"><img id="icoCXooit" src="http://imgup.motion-twin.com/twinoid/e/6/10e87e1a_124312.jpg" style="position: fixed;bottom:0; right: 0"></div>');
     	$(document).on("click", "#icoCXooit", function(e) {
 		$("#maincontainer").find('.tid_module').slideToggle("slow");
@@ -96,9 +95,11 @@ function checkNewMessages(){
 
 
 $(window).on('hashchange', function(e){
-    if(window.location.href.indexOf("118711") > -1){
+    if (window.location.href.indexOf("118711") > -1){
+        if ($("#notifXooit").length == 0){
         makeIco();
         createIframe();
+        }
     }
 });
 
