@@ -230,8 +230,4 @@ CrossDomainStorage.prototype = {
 
 };
 
-var remoteStorage = new CrossDomainStorage("http://chun-alone-in-the-dark.xooit.org", "/search.php?search_id=egosearch");
 
-remoteStorage.requestValue("1", function(key, value){
-    alert("The value for '" + key + "' is '" + value + "'");
-});
