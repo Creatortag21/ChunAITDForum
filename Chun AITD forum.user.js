@@ -100,6 +100,7 @@ else {
 }
 
 function hideUselessStuff(){
+    checkNewMessages();
     $(".bodyline").find("table").first().css("display","none");
     $("body").attr("bgcolor","");
     $("body").attr("style","background: none ; background-color: transparent");
@@ -107,7 +108,7 @@ function hideUselessStuff(){
     $("td.gensmall").append('<br /><a href="http://chun-alone-in-the-dark.xooit.org/privmsg.php?folder=inbox" \
 							class="gensmall">Boite de réception</a>');
     $("body#check").css("color","#EBEBEC");
-    checkNewMessages();
+    //setInterval(checkNewMessages, 30000);
 }
 
              
@@ -117,13 +118,27 @@ function checkNewMessages(){
       url:      "http://chun-alone-in-the-dark.xooit.org/search.php?search_id=egosearch",
       dataType: "html",
       success: function(data){
+          localStorage.removeItem('Xooit');
           parsedElements = $(data);
           var nbrNotif = 0;
           parsedElements.find(".bodyline").find(".forumline").find("tr").each(function(){
               if ($(this).find("td").first().find("img").attr("alt") == "Nouveaux messages"){
-                  localStorage.setItem('1',$(this).find("td").eq(1).find("a").text());
+                  nbrNotif++;
+                  if (localStorage.getItem('Xooit') !== null){
+                      localStorage.setItem('Xooit',localStorage.getItem('Xooit') + ';' + $(this).find("td").eq(1).find('span').find('a').text() + 'µ' +$(this).find("td").eq(2).find("span").find('a').eq(1).text() + 'µ' + $(this).find("td").eq(6).find('a').eq(1).attr('href'));
+                  }
+                  else{
+                    localStorage.setItem('Xooit',$(this).find("td").eq(1).find('span').find('a').text() + 'µ' +$(this).find("td").eq(2).find("span").find('a').eq(1).text() + 'µ' + $(this).find("td").eq(6).find('a').eq(1).attr('href'));  
+                  }
               }
           });
+          
+          if (localStorage.getItem('Xooit') !== null){
+              localStorage.setItem('Xooit',localStorage.getItem('Xooit') + ';' +nbrNotif);
+          }
+          else{
+              localStorage.setItem('Xooit',nbrNotif);  
+          }
       }
     });
 }
@@ -178,6 +193,7 @@ CrossDomainStorage.prototype = {
         }
 
         this._iframe.src = this.origin + this.path;
+        this._iframe.id = 'iFrameNotif';
 
     },
 
@@ -225,9 +241,59 @@ CrossDomainStorage.prototype = {
             var data = JSON.parse(event.data);
             this._requests[data.id].callback(data.key, data.value);
             delete this._requests[data.id];
+            this._iframe.src = '';
         }
     }
 
 };
+$(document).ready(function(){
+    setTimeout(showNotif, 4000);
+});
+
+function showNotif(){	
+    var remoteStorage = new CrossDomainStorage("http://chun-alone-in-the-dark.xooit.org", "/search.php?search_id=egosearch");
+
+	remoteStorage.requestValue("Xooit", function(key, value){
+        var res = value.split(';');
+        var treeModify = 0;
+        
+        $(".tid_sidePanel").bind("DOMSubtreeModified", function() {
+            if ($('.tid_events').find('.tid_eventList').length > 0){
+                var addXooit = '<div id = "xooitNotifMess">';
+                for (var i = 0; i < res.length-1; i++){
+                    var split = res[i].split('µ');
+                    addXooit = addXooit + '<a class="tid_eventItem tid_read_false" href="http://chun-alone-in-the-dark.xooit.org/' + split[2] + '">'
+            + '<div class="tid_icon"><img width="32px" src="http://imgup.motion-twin.com/twinoid/e/6/10e87e1a_124312.jpg"></div>'
+                    + '<div style="display:inline-flex;margin-top: 4px; font-weight: 900">' + split[0] + '</div><div class="tid_eventContent">'
+			+ '<div class="tid_title">'
+			+ '<div class="tid_title">"'+ split[1] +'"</div>'
+			+ '<div class="tid_site"> Chun, Alone in the dark <img src="http://mush.vg/favicon.ico" alt="[?]" class="tid_favicon"> </div>'
+			+ '</div>'
+		    + '</div>'
+			+ '</a>';  
+                }
+                if ($('.tid_events').find('.tid_eventList').find('#xooitNotifMess').length){}
+                else{
+                    addXooit = addXooit + '</div>';
+                	$(this).find('.tid_events').find('.tid_eventList').prepend(addXooit);
+                }
+            }
+        });        
+        
+        if (res[res.length-1] != 0){
+            $(".tid_topBar").find('.tid_userNotif').css("display","inherit");
+            var nbrNotifXooit = parseInt($(".tid_topBar").find(".tid_userNotif").find(".tid_counter").text()) + parseInt(res[res.length-1]);
+            $(".tid_topBar").find(".tid_userNotif").find(".tid_counter").text(nbrNotifXooit);
+        }
+         
+	});
+    
+    $("#iframeNotif").remove();
+};
+
+
+/*
+  
+ */
 
 
