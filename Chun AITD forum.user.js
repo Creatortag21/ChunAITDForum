@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Chun, AITD forum
 // @namespace    http://your.homepage/
-// @version      0.00008
+// @version      1.0
 // @description  Such a useful description aiiight mah nigga
 // @author       Infection
 // @include      http://mush.vg/*
@@ -250,6 +250,10 @@ $(document).ready(function(){
     setTimeout(showNotif, 4000);
 });
 
+function newNotifClick(event){
+    alert($(event).attr('class'));
+}
+
 function showNotif(){	
     var remoteStorage = new CrossDomainStorage("http://chun-alone-in-the-dark.xooit.org", "/search.php?search_id=egosearch");
 
@@ -262,7 +266,7 @@ function showNotif(){
                 var addXooit = '<div id = "xooitNotifMess">';
                 for (var i = 0; i < res.length-1; i++){
                     var split = res[i].split('µ');
-                    addXooit = addXooit + '<a class="tid_eventItem tid_read_false" href="http://chun-alone-in-the-dark.xooit.org/' + split[2] + '">'
+                    addXooit = addXooit + '<a class="tid_eventItem tid_read_false" target="_blank" href="http://chun-alone-in-the-dark.xooit.org/' + split[2] + '">'
             + '<div class="tid_icon"><img width="32px" src="http://imgup.motion-twin.com/twinoid/e/6/10e87e1a_124312.jpg"></div>'
                     + '<div style="display:inline-flex;margin-top: 4px; font-weight: 900">' + split[0] + '</div><div class="tid_eventContent">'
 			+ '<div class="tid_title">'
@@ -288,9 +292,10 @@ function showNotif(){
          
 	});
     
+    
     $("#iframeNotif").remove();
 };
-
+//http://chun-alone-in-the-dark.xooit.org/' + split[2] + '
 
 /*
   
